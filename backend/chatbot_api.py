@@ -43,17 +43,10 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="DoorSmash AI Chatbot API", lifespan=lifespan)
 
-# CORS middleware - Updated for production deployment
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Local development
-        "http://localhost:3000",
-        "https://doorsmash-git-main-hyuzukirmizis-projects.vercel.app",  # Production frontend
-        "https://doorsmash-92mnnq0bn-hyuzukirmizis-projects.vercel.app",  # Preview deployment
-        "https://www.udoorsmashorpass.tech",  # Custom domain
-        "https://*.vercel.app",  # All Vercel preview deployments
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

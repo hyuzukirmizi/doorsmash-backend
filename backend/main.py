@@ -21,17 +21,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS middleware - Updated for production deployment
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Local development
-        "http://localhost:3000",
-        "https://doorsmash-git-main-hyuzukirmizis-projects.vercel.app",  # Production frontend
-        "https://doorsmash-92mnnq0bn-hyuzukirmizis-projects.vercel.app",  # Preview deployment
-        "https://www.udoorsmashorpass.tech",  # Custom domain
-        "https://*.vercel.app",  # All Vercel preview deployments
-    ],
+    allow_origins=["*"],  # Update with specific origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -55,14 +48,6 @@ async def root():
         },
         "docs": "/docs"
     }
-
-
-@app.get("/favicon.ico", include_in_schema=False)
-@app.get("/favicon.png", include_in_schema=False)
-async def favicon():
-    """Return 204 No Content for favicon requests to avoid 404 errors"""
-    from fastapi.responses import Response
-    return Response(status_code=204)
 
 
 @app.get("/health")
