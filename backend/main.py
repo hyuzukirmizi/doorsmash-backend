@@ -13,6 +13,7 @@ load_dotenv()
 # Import the individual API apps
 from orders_api import app as orders_app
 from nutrition_api import app as nutrition_app
+from chatbot_api import app as chatbot_app
 
 # Create main app
 app = FastAPI(
@@ -73,14 +74,20 @@ async def health_check():
 # Manually add all routes from both apps to avoid mount() issues
 # This preserves the original route handlers with all dependencies intact
 for route in orders_app.routes:
-    # Skip the root endpoint as we already have one
-    if hasattr(route, 'path') and route.path != "/":
+    if hasattr(route, 'path') and route.path not in ["/"]:
         app.routes.append(route)
 
 for route in nutrition_app.routes:
-    # Skip the root and health endpoints
     if hasattr(route, 'path') and route.path not in ["/", "/health"]:
         app.routes.append(route)
+
+# Fallback: include chatbot routes (/chat, /history/{user_id}) directly so 404s disappear
+# Skip its root '/' since we already define one here.
+for route in chatbot_app.routes:
+    if hasattr(route, 'path') and route.path not in ["/"]:
+        # Prevent duplicate insertion if route already present
+        if not any(getattr(r, 'path', None) == route.path for r in app.routes):
+            app.routes.append(route)
 
 
 if __name__ == "__main__":
