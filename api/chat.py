@@ -10,14 +10,18 @@ BACKEND_DIR = CURRENT_DIR / "backend"
 
 if BACKEND_DIR.exists() and (BACKEND_DIR / "chatbot_api.py").exists():
     sys.path.insert(0, str(BACKEND_DIR))
-    from chatbot_api import app
+    from chatbot_api import app, chat as chat_handler
 elif (CURRENT_DIR.parent / "backend" / "chatbot_api.py").exists():
     sys.path.insert(0, str(CURRENT_DIR.parent / "backend"))
-    from chatbot_api import app
+    from chatbot_api import app, chat as chat_handler
 elif (CURRENT_DIR / "chatbot_api.py").exists():
     sys.path.insert(0, str(CURRENT_DIR))
-    from chatbot_api import app
+    from chatbot_api import app, chat as chat_handler
 else:
     raise ImportError("chatbot_api.py not found for FastAPI app.")
 
 __all__ = ["app"]
+
+# Add an alias so POST "/" works inside the serverless function environment
+# Vercel typically strips the function path and routes requests to "/".
+app.add_api_route("/", chat_handler, methods=["POST"])
