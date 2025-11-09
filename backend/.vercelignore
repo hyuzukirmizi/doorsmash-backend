@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Testing
+test_*.py
+*_test.py
+tests/
+.pytest_cache/
+.coverage
+
+# Development
+.env.example
+*.md
+!README.md
+QUICKSTART_*.md
+SETUP_*.md
+BACKEND_DOCUMENTATION.md
+
+# Scripts
+*.ps1
+*.sh
+
+# Data files
+*.json
+!vercel.json
+
+# Backup files
+requirements-backup.txt
+requirements-vercel.txt
+requirements-prod.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit and dev tools
+streamlit_app.py
+scraper.py
+seed_data.py
+verify_implementation.py
