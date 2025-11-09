@@ -21,10 +21,17 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS middleware
+# CORS middleware - Updated for production deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Update with specific origins in production
+    allow_origins=[
+        "http://localhost:5173",  # Local development
+        "http://localhost:3000",
+        "https://doorsmash-git-main-hyuzukirmizis-projects.vercel.app",  # Production frontend
+        "https://doorsmash-92mnnq0bn-hyuzukirmizis-projects.vercel.app",  # Preview deployment
+        "https://www.udoorsmashorpass.tech",  # Custom domain
+        "https://*.vercel.app",  # All Vercel preview deployments
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
