@@ -50,6 +50,14 @@ async def root():
     }
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+@app.get("/favicon.png", include_in_schema=False)
+async def favicon():
+    """Return 204 No Content for favicon requests to avoid 404 errors"""
+    from fastapi.responses import Response
+    return Response(status_code=204)
+
+
 @app.get("/health")
 async def health_check():
     """Health check for the entire API"""
