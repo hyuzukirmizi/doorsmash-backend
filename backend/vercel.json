@@ -1,9 +1,10 @@
 {
-    "builds":[
-    {
-      "src": "backend/main.py",
-      "use": "@vercel/python"
-}],
-          "routes": [
-            { "src": "/(.*)", "dest": "backend/main.py" }]
+  "builds": [
+    { "src": "backend/api/*.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/chat", "dest": "backend/api/chat.py" },
+    { "src": "/chat/(.*)", "dest": "backend/api/chat.py" },
+    { "src": "/(.*)", "dest": "backend/api/index.py" }
+  ]
 }
